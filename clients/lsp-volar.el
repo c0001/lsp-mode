@@ -103,7 +103,15 @@ And forwarding PARAMS to the typescript LSP server.
 Reference:
 - https://github.com/vuejs/language-tools/discussions/5456
 - https://github.com/vuejs/language-tools/wiki/Neovim#configuration"
-  (if-let* ((ts-ls-workspace (lsp-find-workspace lsp-volar-typescript-server-id nil)))
+  (if-let* ((ts-ls-workspace
+             (lsp-find-workspace lsp-volar-typescript-server-id
+                                 ;; NOTE: we should stick the same
+                                 ;; workspace on current file since
+                                 ;; all ts-ls server has the same
+                                 ;; server-id in `lsp-mode' on which
+                                 ;; wrong workspace return will make
+                                 ;; error of =Error: No Project.=.
+                                 buffer-file-name)))
     (with-lsp-workspace ts-ls-workspace
       (-let [[[id command payload]] params]
         (lsp-request-async
