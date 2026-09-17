@@ -42,7 +42,9 @@ flycheck_*.el
 .projectile
 
 /*-autoloads.el
+!/lsp-mode-autoloads.el
 /*-pkg.el
+!/lsp-mode-pkg.el
 /.ecukes-failing-scenarios
 
 # personal customizations
